@@ -1,0 +1,30 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.47">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;uap10.0.16299</TargetFrameworks>
+    <PackageId>IntelliAbb.Xamarin.Forms.Checkbox</PackageId>
+    <Authors>Hussain N. Abbasi</Authors>
+    <Company>intelliAbb</Company>
+    <Description>Cross-platform checkbox for Xamarin.Forms.</Description>
+    <Copyright>intelliAbb</Copyright>
+    <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Intelliabb/XamarinFormsCheckbox</PackageProjectUrl>
+    <PackageIconUrl>https://pbs.twimg.com/profile_images/2539494001/od06pxye4rtrccuivzj6_400x400.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Intelliabb/XamarinFormsCheckbox</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>xamarin, forms, checkbox</PackageTags>
+    <PackageReleaseNotes>Simple and animated checkbox</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RootNamespace>IntelliAbb.Xamarin.XCheckbox</RootNamespace>
+    <AssemblyName>IntelliAbb.Xamarin.XCheckbox</AssemblyName>
+    <Product></Product>
+    <Version>1.0.13-pre</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.60.3" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+  </ItemGroup>
+
+</Project>
