@@ -1,2 +1,2 @@
-# XamarinFormsCheckbox
-Cross-platform checkbox for Xamarin.Forms.
+# Xamarin Controls
+Cross-platform controls for Xamarin and Xamarin.Forms.
