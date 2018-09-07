@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <PackageId>IntelliAbb.Xamarin.Controls</PackageId>
+    <Description>Cross platform controls for Xamarin.Forms</Description>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <DefaultLanguage>en-US</DefaultLanguage>
     <Authors>Hussain Abbasi</Authors>
@@ -8,7 +9,7 @@
     <PackageIconUrl>https://pbs.twimg.com/profile_images/2539494001/od06pxye4rtrccuivzj6_400x400.png</PackageIconUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Intelliabb/XamarinControls</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Intelliabb/XamarinFormsCheckbox</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Intelliabb/XamarinControls</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <!-- Root control Version Prefix -->
@@ -24,7 +25,7 @@
     <GeneratePackageOnBuild>$(IsPackable)</GeneratePackageOnBuild>
     <IS_PREVIEW Condition=" $(IS_PREVIEW) == '' ">false</IS_PREVIEW>
     <IS_RELEASE Condition=" $(IS_RELEASE) == '' ">false</IS_RELEASE>
-    <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
+    <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix)$(BUILD_BUILDNUMBER)</VersionPrefix>
     <VersionSuffix>ci</VersionSuffix>
     <VersionSuffix Condition=" $(IS_PREVIEW) ">pre</VersionSuffix>
     <VersionSuffix Condition=" $(IS_RELEASE) "></VersionSuffix>
