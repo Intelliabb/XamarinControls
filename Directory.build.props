@@ -1,0 +1,32 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>IntelliAbb.Xamarin.Controls</PackageId>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <Authors>Hussain Abbasi</Authors>
+    <Copyright>© $([System.DateTime]::Now.Year) intelliAbb</Copyright>
+    <PackageIconUrl>https://pbs.twimg.com/profile_images/2539494001/od06pxye4rtrccuivzj6_400x400.png</PackageIconUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Intelliabb/XamarinControls</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Intelliabb/XamarinFormsCheckbox</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <!-- Root control Version Prefix -->
+    <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+ 
+  <!-- CI Helpers -->
+  <PropertyGroup>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)/Artifacts</PackageOutputPath>
+    <PackageOutputPath Condition=" $(BUILD_ARTIFACTSTAGINGDIRECTORY) != '' ">$(BUILD_ARTIFACTSTAGINGDIRECTORY)</PackageOutputPath>
+    <IsPackable Condition=" $(ProjectName.Contains('Sample')) ">false</IsPackable>
+    <IsPackable Condition=" $(ProjectName.Contains('Test')) ">false</IsPackable>
+    <GeneratePackageOnBuild>$(IsPackable)</GeneratePackageOnBuild>
+    <IS_PREVIEW Condition=" $(IS_PREVIEW) == '' ">false</IS_PREVIEW>
+    <IS_RELEASE Condition=" $(IS_RELEASE) == '' ">false</IS_RELEASE>
+    <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
+    <VersionSuffix>ci</VersionSuffix>
+    <VersionSuffix Condition=" $(IS_PREVIEW) ">pre</VersionSuffix>
+    <VersionSuffix Condition=" $(IS_RELEASE) "></VersionSuffix>
+  </PropertyGroup>
+</Project>
