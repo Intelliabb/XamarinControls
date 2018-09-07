@@ -1,0 +1,15 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.47">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;uap10.0.16299</TargetFrameworks>
+    <Company>intelliAbb</Company>
+    <Description>Cross-platform checkbox for Xamarin.Forms.</Description>
+    <RootNamespace>IntelliAbb.Xamarin.Controls</RootNamespace>
+    <AssemblyName>IntelliAbb.Xamarin.Controls</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.60.3" />
+  </ItemGroup>
+
+</Project>

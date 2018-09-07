@@ -6,7 +6,7 @@ using SkiaSharp;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace IntelliAbb.Xamarin.Forms
+namespace IntelliAbb.Xamarin.Controls
 {
     /// <summary>
     /// This is a cross-platform checkbox control.
@@ -92,7 +92,7 @@ namespace IntelliAbb.Xamarin.Forms
             {
                 Style = SKPaintStyle.Fill,
                 Color = FillColor.ToSKColor(),
-                StrokeJoin = SKStrokeJoin.Bevel
+                StrokeJoin = SKStrokeJoin.Round
             })
             {
                 canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), checkfill);
