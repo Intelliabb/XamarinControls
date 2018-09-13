@@ -1,11 +1,14 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.47">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/1.6.47">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;uap10.0.16299</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard2.0;Xamarin.iOS10;MonoAndroid81</TargetFrameworks>
     <Company>intelliAbb</Company>
     <Description>Cross-platform checkbox for Xamarin.Forms.</Description>
     <RootNamespace>IntelliAbb.Xamarin.Controls</RootNamespace>
     <AssemblyName>IntelliAbb.Xamarin.Controls</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
