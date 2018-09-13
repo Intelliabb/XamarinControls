@@ -92,7 +92,8 @@ namespace IntelliAbb.Xamarin.Controls
             {
                 Style = SKPaintStyle.Fill,
                 Color = FillColor.ToSKColor(),
-                StrokeJoin = SKStrokeJoin.Round
+                StrokeJoin = SKStrokeJoin.Round,
+                IsAntialias = true
             })
             {
                 canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), checkfill);
@@ -109,7 +110,8 @@ namespace IntelliAbb.Xamarin.Controls
                     Style = SKPaintStyle.Stroke,
                     Color = CheckColor.ToSKColor(),
                     StrokeWidth = (float)OutlineWidth,
-                    StrokeCap = SKStrokeCap.Round
+                    StrokeCap = SKStrokeCap.Round,
+                    IsAntialias = true
                 })
                 {
                     canvas.DrawPath(checkPath, checkStroke);
@@ -128,7 +130,8 @@ namespace IntelliAbb.Xamarin.Controls
                 Style = SKPaintStyle.Stroke,
                 Color = OutlineColor.ToSKColor(),
                 StrokeWidth = (float)OutlineWidth,
-                StrokeJoin = SKStrokeJoin.Round
+                StrokeJoin = SKStrokeJoin.Round,
+                IsAntialias = true
             })
             {
                 canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), outline);
