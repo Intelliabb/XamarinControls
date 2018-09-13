@@ -17,9 +17,9 @@ namespace IntelliAbb.Xamarin.Controls
         #region Fields
 
         const double DEFAULT_SIZE = 28;
-        bool isAnimating;
-        SKCanvasView skiaView;
-        ICommand ToggleCommand;
+        bool _isAnimating;
+        SKCanvasView _skiaView;
+        ICommand _toggleCommand;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace IntelliAbb.Xamarin.Controls
         public Checkbox()
         {
             InitializeCanvas();
-            Content = skiaView;
+            Content = _skiaView;
         }
 
         #endregion
@@ -37,34 +37,34 @@ namespace IntelliAbb.Xamarin.Controls
 
         void InitializeCanvas()
         {
-            ToggleCommand = new Command(OnTappedCommand);
+            _toggleCommand = new Command(OnTappedCommand);
 
-            skiaView = new SKCanvasView();
-            skiaView.PaintSurface += Handle_PaintSurface;
-            skiaView.WidthRequest = skiaView.HeightRequest = DEFAULT_SIZE;
-            skiaView.GestureRecognizers.Add(new TapGestureRecognizer
+            _skiaView = new SKCanvasView();
+            _skiaView.PaintSurface += Handle_PaintSurface;
+            _skiaView.WidthRequest = _skiaView.HeightRequest = DEFAULT_SIZE;
+            _skiaView.GestureRecognizers.Add(new TapGestureRecognizer
             {
-                Command = ToggleCommand
+                Command = _toggleCommand
             });
         }
 
         async void OnTappedCommand(object obj)
         {
-            if (isAnimating)
+            if (_isAnimating)
                 return;
 
-            isAnimating = true;
+            _isAnimating = true;
             IsChecked = !IsChecked;
 
             if (!IsChecked)
-                skiaView.InvalidateSurface();
+                _skiaView.InvalidateSurface();
             else
             {
-                await skiaView.ScaleTo(0.85, 100);
-                skiaView.InvalidateSurface();
-                await skiaView.ScaleTo(1, 100, IsChecked ? Easing.BounceOut : null);
+                await _skiaView.ScaleTo(0.85, 100);
+                _skiaView.InvalidateSurface();
+                await _skiaView.ScaleTo(1, 100, IsChecked ? Easing.BounceOut : null);
             }
-            isAnimating = false;
+            _isAnimating = false;
         }
         #endregion
 
@@ -233,7 +233,7 @@ namespace IntelliAbb.Xamarin.Controls
         {
             var checkbox = bindable as Checkbox;
             checkbox?.IsCheckedChanged?.Invoke(checkbox, new TappedEventArgs((bool)newValue));
-            checkbox?.skiaView?.InvalidateSurface();
+            checkbox?._skiaView?.InvalidateSurface();
         }
 
         #endregion
@@ -242,7 +242,7 @@ namespace IntelliAbb.Xamarin.Controls
 
         public void Dispose()
         {
-            skiaView.PaintSurface -= Handle_PaintSurface;
+            _skiaView.PaintSurface -= Handle_PaintSurface;
         }
 
         #endregion
