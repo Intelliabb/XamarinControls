@@ -1,4 +1,7 @@
 # Xamarin Controls
+
+![XamarinControlsLogo](/XamarinControlsLogo_128.png) 
+
 Cross-platform controls for Xamarin and Xamarin.Forms.
 
 * Checkbox
