@@ -11,12 +11,13 @@
     <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Intelliabb/XamarinControls</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Intelliabb/XamarinControls</RepositoryUrl>
-    <ReleaseNotes>Release notes can be found at https://github.com/Intelliabb/XamarinControls/wiki/Release-Notes</ReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <!-- Root control Version Prefix -->
     <VersionPrefix>1.0.0</VersionPrefix>
-    <Tags>xamarin;forms;controls;checkbox;card</Tags>
+    <PackageSummary>Cross platform controls for Xamarin.Forms</PackageSummary>
+    <PackageTags>xamarin;forms;controls;checkbox;card</PackageTags>
+    <PackageReleaseNotes>Release notes are located at https://github.com/Intelliabb/XamarinControls/wiki/Release-Notes</PackageReleaseNotes>
   </PropertyGroup>
  
   <!-- CI Helpers -->
