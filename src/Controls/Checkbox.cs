@@ -56,14 +56,9 @@ namespace IntelliAbb.Xamarin.Controls
             _isAnimating = true;
             IsChecked = !IsChecked;
 
-            if (!IsChecked)
-                _skiaView.InvalidateSurface();
-            else
-            {
-                await _skiaView.ScaleTo(0.85, 100);
-                _skiaView.InvalidateSurface();
-                await _skiaView.ScaleTo(1, 100, IsChecked ? Easing.BounceOut : null);
-            }
+            await _skiaView.ScaleTo(0.85, 100);
+            _skiaView.InvalidateSurface();
+            await _skiaView.ScaleTo(1, 100, IsChecked ? Easing.BounceOut : null);
             _isAnimating = false;
         }
         #endregion
@@ -72,15 +67,11 @@ namespace IntelliAbb.Xamarin.Controls
         void Handle_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
             e?.Surface?.Canvas?.Clear();
-            
+
+            DrawOutline(e);
+
             if (IsChecked)
-            {
                 DrawCheckFilled(e);
-            }
-            else
-            {
-                DrawOutline(e);
-            }
         }
 
         void DrawCheckFilled(SKPaintSurfaceEventArgs e)
@@ -96,14 +87,17 @@ namespace IntelliAbb.Xamarin.Controls
                 IsAntialias = true
             })
             {
-                canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), checkfill);
+                if (Shape == Shape.Circle)
+                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - OutlineWidth, checkfill);
+                else
+                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, checkfill);
             }
 
             using (var checkPath = new SKPath())
             {
-                checkPath.MoveTo(.25f * imageInfo.Width, .53f * imageInfo.Height);
-                checkPath.LineTo(.4f * imageInfo.Width, .7f * imageInfo.Height);
-                checkPath.LineTo(.75f * imageInfo.Width, .4f * imageInfo.Height);
+                checkPath.MoveTo(.275f * imageInfo.Width, .5f * imageInfo.Height);
+                checkPath.LineTo(.425f * imageInfo.Width, .65f * imageInfo.Height);
+                checkPath.LineTo(.725f * imageInfo.Width, .375f * imageInfo.Height);
 
                 using (var checkStroke = new SKPaint
                 {
@@ -129,19 +123,22 @@ namespace IntelliAbb.Xamarin.Controls
             {
                 Style = SKPaintStyle.Stroke,
                 Color = OutlineColor.ToSKColor(),
-                StrokeWidth = (float)OutlineWidth,
+                StrokeWidth = OutlineWidth,
                 StrokeJoin = SKStrokeJoin.Round,
                 IsAntialias = true
             })
             {
-                canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), outline);
+                if (Shape == Shape.Circle)
+                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), outline);
+                else
+                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, outline);
             }
         }
         #endregion
 
         #region Events
         /// <summary>
-        /// Occurs when IsChecked is changed.
+        /// Raised when IsChecked is changed.
         /// </summary>
         public event EventHandler<TappedEventArgs> IsCheckedChanged;
         #endregion
@@ -181,21 +178,31 @@ namespace IntelliAbb.Xamarin.Controls
             set { SetValue(CheckColorProperty, value); }
         }
 
-        public static BindableProperty OutlineWidthProperty = BindableProperty.Create(nameof(OutlineWidth), typeof(double), typeof(Checkbox), 8.0);
+        public static BindableProperty OutlineWidthProperty = BindableProperty.Create(nameof(OutlineWidth), typeof(float), typeof(Checkbox), 8.0f);
         /// <summary>
         /// Gets or sets the width of the outline and check.
         /// </summary>
         /// <value>The width of the outline and check.</value>
-        public double OutlineWidth
+        public float OutlineWidth
         {
-            get { return (double)GetValue(OutlineWidthProperty); }
+            get { return (float)GetValue(OutlineWidthProperty); }
             set { SetValue(OutlineWidthProperty, value); }
+        }
+
+        public static BindableProperty ShapeProperty = BindableProperty.Create(nameof(Shape), typeof(Shape), typeof(Checkbox), Shape.Circle);
+        /// <summary>
+        /// Gets or sets the shape of the <see cref="T:IntelliAbb.Xamarin.Controls.Checkbox"/>.
+        /// </summary>
+        public Shape Shape
+        {
+            get { return (Shape)GetValue(ShapeProperty); }
+            set { SetValue(ShapeProperty, value); }
         }
 
         public static new BindableProperty StyleProperty = BindableProperty.Create(nameof(Style), typeof(Style), typeof(Checkbox), propertyChanged: OnStyleChanged);
 
         /// <summary>
-        /// Gets or sets the style for HCTRACheckbox.
+        /// Gets or sets the style for <see cref="T:IntelliAbb.Xamarin.Controls.Checkbox"/>.
         /// </summary>
         /// <value>The style.</value>
         public new Style Style
@@ -223,7 +230,7 @@ namespace IntelliAbb.Xamarin.Controls
 
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(Checkbox), false, BindingMode.TwoWay, propertyChanged: OnIsCheckedChanged);
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="T:HCTRAMobile.Controls.HCTRACheckbox"/> is checked.
+        /// Gets or sets a value indicating whether this <see cref="T:IntelliAbb.Xamarin.Controls.Checkbox"/> is checked.
         /// </summary>
         /// <value><c>true</c> if is checked; otherwise, <c>false</c>.</value>
         public bool IsChecked
@@ -249,6 +256,11 @@ namespace IntelliAbb.Xamarin.Controls
         }
 
         #endregion
+    }
+    public enum Shape
+    {
+        Circle,
+        Rectangle
     }
 }
 
