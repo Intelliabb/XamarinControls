@@ -29,6 +29,7 @@ namespace IntelliAbb.Xamarin.Controls
         {
             InitializeCanvas();
             Content = _skiaView;
+            HorizontalOptions = VerticalOptions = new LayoutOptions(LayoutAlignment.Center, false);
         }
 
         #endregion
@@ -88,7 +89,7 @@ namespace IntelliAbb.Xamarin.Controls
             })
             {
                 if (Shape == Shape.Circle)
-                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - OutlineWidth, checkfill);
+                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), checkfill);
                 else
                     canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, checkfill);
             }
@@ -129,7 +130,7 @@ namespace IntelliAbb.Xamarin.Controls
             })
             {
                 if (Shape == Shape.Circle)
-                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - OutlineWidth), outline);
+                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - (OutlineWidth / 2)), outline);
                 else
                     canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, outline);
             }
