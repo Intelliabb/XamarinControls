@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+    <Title>XamarinControls</Title>
     <PackageId>IntelliAbb.Xamarin.Controls</PackageId>
     <Description>Cross platform controls for Xamarin.Forms</Description>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
@@ -10,10 +11,12 @@
     <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Intelliabb/XamarinControls</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Intelliabb/XamarinControls</RepositoryUrl>
+    <ReleaseNotes>Release notes can be found at https://github.com/Intelliabb/XamarinControls/wiki/Release-Notes</ReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <!-- Root control Version Prefix -->
     <VersionPrefix>1.0.0</VersionPrefix>
+    <Tags>xamarin;forms;controls;checkbox;card</Tags>
   </PropertyGroup>
  
   <!-- CI Helpers -->
