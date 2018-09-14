@@ -3,6 +3,8 @@
 <img src="XamarinControlsLogo.png" width="128" height="128"/>
 Cross-platform controls for Xamarin and Xamarin.Forms.
 
+NuGet Package: https://www.nuget.org/packages/IntelliAbb.Xamarin.Controls
+
 Package | Status
 ---|---
 Pre Release|[![Build status](https://intelliabb.visualstudio.com/XamarinControls/_apis/build/status/XamarinControls%20Pre-release)](https://intelliabb.visualstudio.com/XamarinControls/_build/latest?definitionId=7)
@@ -14,4 +16,4 @@ Controls:
 * Radio button control (coming soon)
 
 
-##### Copyright 2018 intelliAbb (Hussain Abbasi)
+##### Copyright 2018 intelliAbb
