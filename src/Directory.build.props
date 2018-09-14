@@ -25,10 +25,9 @@
     <GeneratePackageOnBuild>$(IsPackable)</GeneratePackageOnBuild>
     <IS_PREVIEW Condition=" $(IS_PREVIEW) == '' ">false</IS_PREVIEW>
     <IS_RELEASE Condition=" $(IS_RELEASE) == '' ">false</IS_RELEASE>
-    <IS_RELEASE Condition="'$(Configuration)' == 'Release'">true</IS_RELEASE>
     <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix)$(BUILD_BUILDNUMBER)</VersionPrefix>
     <VersionSuffix>ci</VersionSuffix>
-    <VersionSuffix Condition=" $(IS_RELEASE) "></VersionSuffix>
     <VersionSuffix Condition=" $(IS_PREVIEW) ">pre</VersionSuffix>
+    <VersionSuffix Condition=" $(IS_RELEASE) "></VersionSuffix>
   </PropertyGroup>
 </Project>
