@@ -1,6 +1,6 @@
 # Xamarin Controls
 
-<img src="XamarinControlsLogo.png" width="128" height="128"/>
+<img src="media/XamarinControlsLogo.png" width="128" height="128"/>
 Cross-platform controls for Xamarin and Xamarin.Forms.
 
 NuGet Package: https://www.nuget.org/packages/IntelliAbb.Xamarin.Controls
@@ -13,7 +13,7 @@ CI Builds|[![Build Status](https://intelliabb.visualstudio.com/XamarinControls/_
 ## Controls
 Control | Screenshot
 ---|---
-Checkbox | <img src="checkbox.jpg"/>
+Checkbox | <img src="media/checkbox.jpg"/>
 
 ## Roadmap
 * Card View (coming soon)
