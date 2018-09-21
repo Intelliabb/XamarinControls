@@ -13,7 +13,7 @@ CI Builds|[![Build Status](https://intelliabb.visualstudio.com/XamarinControls/_
 ## Controls
 Control | Screenshot
 ---|---
-Checkbox | <img src="media/checkbox.jpg"/>
+Checkbox | <img src="media/checkbox.gif"/>
 
 ## Roadmap
 * Card View (coming soon)
