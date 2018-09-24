@@ -2,40 +2,29 @@
 <Frame xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IntelliAbb.Xamarin.Controls.CardView"
-             x:Name="this">
+             x:Name="this"
+             Padding="4">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
+    <StackLayout>
         <!-- Icon & Title -->
-        <Grid x:Name="IconTitleGrid" Padding="6,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <StackLayout x:Name="IconTitleGrid" Orientation="Horizontal">
 
             <Image Source="{Binding Icon, Source={x:Reference this}}" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" 
                Aspect="AspectFit" 
-               HeightRequest="40"/>
+               HeightRequest="30"/>
 
-            <Label Grid.Column="1" 
+            <Label 
                Text="{Binding Title, Source={x:Reference this}}" 
                Style="{Binding TitleStyle, Source={x:Reference this}}" 
                HorizontalTextAlignment="Start" 
-               VerticalTextAlignment="Center" 
+               VerticalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand"
                VerticalOptions="Center"  
-               HeightRequest="40"/>
-        </Grid>
+               HeightRequest="30"/>
+        </StackLayout>
 
         <!-- Content -->
-        <ContentPresenter Grid.Row="1" 
-                        Content="{Binding CardContent, Source={x:Reference this}}"/>
+        <ContentPresenter Content="{Binding CardContent, Source={x:Reference this}}"/>
 
-    </Grid>
+    </StackLayout>
 </Frame>
