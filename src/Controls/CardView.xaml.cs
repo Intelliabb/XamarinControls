@@ -10,6 +10,25 @@ namespace IntelliAbb.Xamarin.Controls
 		{
 			InitializeComponent ();
 		}
+
+        static Style DEFAULT_TITLE_STYLE => new Style(typeof(Label)) {
+                Setters =
+                {
+                    new Setter
+                    {
+                        Property = Label.FontAttributesProperty, Value=FontAttributes.Bold
+                    },
+                    new Setter
+                    {
+                        Property = Label.FontSizeProperty, Value= 12
+                    },
+                    new Setter
+                    {
+                        Property = Label.TextColorProperty, Value = Color.Gray
+                    }
+                }
+        };
+        
         #region Bindable Properties
 
         #region Icon
@@ -38,7 +57,7 @@ namespace IntelliAbb.Xamarin.Controls
 
         #region TitleStyle
 
-        public static BindableProperty TitleStyleProperty = BindableProperty.Create(nameof(TitleStyle), typeof(Style), typeof(CardView), default(Style));
+        public static BindableProperty TitleStyleProperty = BindableProperty.Create(nameof(TitleStyle), typeof(Style), typeof(CardView), DEFAULT_TITLE_STYLE);
 
         public Style TitleStyle
         {
