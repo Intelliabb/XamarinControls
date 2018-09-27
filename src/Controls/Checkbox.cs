@@ -41,20 +41,18 @@ namespace IntelliAbb.Xamarin.Controls
         static Shape DEFAULT_SHAPE {
             get 
             {
-                Shape shape = Shape.Circle;
+                Shape shape;
                 
                 switch (Device.RuntimePlatform)
                 {
-                    case Device.iOS:
-                        shape = Shape.Circle;
-                        break;
                     case Device.Android:
-                        shape = Shape.Rectangle;
-                        break;
                     case Device.UWP:
                         shape = Shape.Rectangle;
                         break;
+                    
+                    case Device.iOS:
                     default:
+                        shape = Shape.Circle;
                         break;
                 }
                 return shape;
@@ -63,24 +61,27 @@ namespace IntelliAbb.Xamarin.Controls
 
         static float DEFAULT_OUTLINE_WIDTH {
             get {
+                float retVal;
+
                 switch (Device.RuntimePlatform)
                 {
                     case Device.iOS:
-                        return 4.0f;
-                        break;
-                    case Device.Android:
-                        return 6.0f;
+                        retVal = 4.0f;
                         break;
                     case Device.UWP:
-                        return 2.0f;
-                        break;
+                        retVal = 3.0f;
+                        break;                        
+                    case Device.Android:
                     default:
-                        return 8.0f;
+                        retVal = 6.0f;
                         break;
                 }
+                return retVal;
             }
         }
-        
+
+        static Design DEFAULT_DESIGN => Design.Unified;
+
         void InitializeCanvas()
         {
             _toggleCommand = new Command(OnTappedCommand);
@@ -138,22 +139,41 @@ namespace IntelliAbb.Xamarin.Controls
             {
                 if (Shape == Shape.Circle)
                     canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), checkfill);
-                else
-                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, checkfill);
+                else {
+                    var cornerRadius = Design == Design.Native && Device.RuntimePlatform == Device.UWP ? 0 : OutlineWidth;
+                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), cornerRadius, cornerRadius, checkfill);
+                }
             }
 
             using (var checkPath = new SKPath())
             {
-                if (Device.RuntimePlatform == Device.iOS)
-                {
-                    checkPath.MoveTo(.2f * imageInfo.Width, .5f * imageInfo.Height);
-                    checkPath.LineTo(.375f * imageInfo.Width, .675f * imageInfo.Height);
-                    checkPath.LineTo(.75f * imageInfo.Width, .3f * imageInfo.Height);
-                } else
+                if (Design == Design.Unified)
                 {
                     checkPath.MoveTo(.275f * imageInfo.Width, .5f * imageInfo.Height);
                     checkPath.LineTo(.425f * imageInfo.Width, .65f * imageInfo.Height);
                     checkPath.LineTo(.725f * imageInfo.Width, .375f * imageInfo.Height);
+                } else
+                {
+                    switch (Device.RuntimePlatform)
+                    {
+                        case Device.iOS:
+                            checkPath.MoveTo(.2f * imageInfo.Width, .5f * imageInfo.Height);
+                            checkPath.LineTo(.375f * imageInfo.Width, .675f * imageInfo.Height);
+                            checkPath.LineTo(.75f * imageInfo.Width, .3f * imageInfo.Height);
+                            break;
+                        case Device.Android:
+                            checkPath.MoveTo(.2f * imageInfo.Width, .5f * imageInfo.Height);
+                            checkPath.LineTo(.425f * imageInfo.Width, .7f * imageInfo.Height);
+                            checkPath.LineTo(.8f * imageInfo.Width, .275f * imageInfo.Height);
+                            break;
+                        case Device.UWP:
+                            checkPath.MoveTo(.15f * imageInfo.Width, .5f * imageInfo.Height);
+                            checkPath.LineTo(.375f * imageInfo.Width, .75f * imageInfo.Height);
+                            checkPath.LineTo(.85f * imageInfo.Width, .25f * imageInfo.Height);
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 using (var checkStroke = new SKPaint
@@ -161,10 +181,10 @@ namespace IntelliAbb.Xamarin.Controls
                     Style = SKPaintStyle.Stroke,
                     Color = CheckColor.ToSKColor(),
                     StrokeWidth = OutlineWidth,
-                    StrokeCap = SKStrokeCap.Round,
                     IsAntialias = true
                 })
                 {
+                    checkStroke.StrokeCap = Design == Design.Unified ? SKStrokeCap.Round : SKStrokeCap.Butt;
                     canvas.DrawPath(checkPath, checkStroke);
                 }
             }
@@ -187,8 +207,10 @@ namespace IntelliAbb.Xamarin.Controls
             {
                 if (Shape == Shape.Circle)
                     canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), outline);
-                else
-                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, outline);
+                else {                    
+                    var cornerRadius = Design == Design.Native && Device.RuntimePlatform == Device.UWP ? 0 : OutlineWidth;
+                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), cornerRadius, cornerRadius, outline);
+                }
             }
         }
         #endregion
@@ -256,6 +278,16 @@ namespace IntelliAbb.Xamarin.Controls
             set { SetValue(ShapeProperty, value); }
         }
 
+        public static BindableProperty DesignProperty = BindableProperty.Create(nameof(Design), typeof(Design), typeof(Checkbox), DEFAULT_DESIGN);
+        /// <summary>
+        /// Gets or sets the shape of the <see cref="T:IntelliAbb.Xamarin.Controls.Checkbox"/>.
+        /// </summary>
+        public Design Design
+        {
+            get { return (Design)GetValue(DesignProperty); }
+            set { SetValue(DesignProperty, value); }
+        }
+
         public static new BindableProperty StyleProperty = BindableProperty.Create(nameof(Style), typeof(Style), typeof(Checkbox), propertyChanged: OnStyleChanged);
 
         /// <summary>
@@ -313,10 +345,17 @@ namespace IntelliAbb.Xamarin.Controls
 
         #endregion
     }
+
     public enum Shape
     {
         Circle,
         Rectangle
+    }
+
+    public enum Design
+    {
+        Unified,
+        Native
     }
 }
 
