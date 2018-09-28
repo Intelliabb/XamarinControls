@@ -5,6 +5,7 @@ using SkiaSharp.Views.Forms;
 using SkiaSharp;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace IntelliAbb.Xamarin.Controls
 {
@@ -16,7 +17,6 @@ namespace IntelliAbb.Xamarin.Controls
     {
         #region Fields
 
-        const double DEFAULT_SIZE = 28;
         bool _isAnimating;
         SKCanvasView _skiaView;
         ICommand _toggleCommand;
@@ -28,8 +28,75 @@ namespace IntelliAbb.Xamarin.Controls
         public Checkbox()
         {
             InitializeCanvas();
-            Content = _skiaView;
+            WidthRequest = HeightRequest = DEFAULT_SIZE;
             HorizontalOptions = VerticalOptions = new LayoutOptions(LayoutAlignment.Center, false);
+            Content = _skiaView;
+        }
+
+        #endregion
+
+        #region Defaults
+
+        static Design DEFAULT_DESIGN => Design.Unified;
+
+        static Shape DEFAULT_SHAPE {
+            get 
+            {
+                Shape shape;
+                
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.Android:
+                    case Device.UWP:
+                        shape = Shape.Rectangle;
+                        break;
+                    
+                    case Device.iOS:
+                    default:
+                        shape = Shape.Circle;
+                        break;
+                }
+                return shape;
+            } 
+        } 
+
+        static float DEFAULT_OUTLINE_WIDTH {
+            get {
+                float retVal;
+
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.iOS:
+                        retVal = 4.0f;
+                        break;
+                    case Device.UWP:
+                        retVal = 2.5f;
+                        break;                        
+                    case Device.Android:
+                    default:
+                        retVal = 6.0f;
+                        break;
+                }
+                return retVal;
+            }
+        }
+
+        static double DEFAULT_SIZE {
+            get {
+                double retVal;
+                switch(Device.RuntimePlatform) 
+                {
+                    case Device.UWP:
+                        retVal = 20.0;
+                        break;                        
+                    case Device.iOS:
+                    case Device.Android:
+                    default:
+                        retVal = 24.0;
+                        break;
+                }
+                return retVal;
+            }
         }
 
         #endregion
@@ -49,17 +116,20 @@ namespace IntelliAbb.Xamarin.Controls
             });
         }
 
-        async void OnTappedCommand(object obj)
+        void OnTappedCommand(object obj)
         {
             if (_isAnimating)
                 return;
 
-            _isAnimating = true;
             IsChecked = !IsChecked;
+        }
 
+        async Task AnimateToggle()
+        {
+            _isAnimating = true;
             await _skiaView.ScaleTo(0.85, 100);
             _skiaView.InvalidateSurface();
-            await _skiaView.ScaleTo(1, 100, IsChecked ? Easing.BounceOut : null);
+            await _skiaView.ScaleTo(1, 100, Easing.BounceOut);
             _isAnimating = false;
         }
         #endregion
@@ -90,25 +160,52 @@ namespace IntelliAbb.Xamarin.Controls
             {
                 if (Shape == Shape.Circle)
                     canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), checkfill);
-                else
-                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, checkfill);
+                else {
+                    var cornerRadius = Design == Design.Native && Device.RuntimePlatform == Device.UWP ? 0 : OutlineWidth;
+                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), cornerRadius, cornerRadius, checkfill);
+                }
             }
 
             using (var checkPath = new SKPath())
             {
-                checkPath.MoveTo(.275f * imageInfo.Width, .5f * imageInfo.Height);
-                checkPath.LineTo(.425f * imageInfo.Width, .65f * imageInfo.Height);
-                checkPath.LineTo(.725f * imageInfo.Width, .375f * imageInfo.Height);
+                if (Design == Design.Unified)
+                {
+                    checkPath.MoveTo(.275f * imageInfo.Width, .5f * imageInfo.Height);
+                    checkPath.LineTo(.425f * imageInfo.Width, .65f * imageInfo.Height);
+                    checkPath.LineTo(.725f * imageInfo.Width, .375f * imageInfo.Height);
+                } else
+                {
+                    switch (Device.RuntimePlatform)
+                    {
+                        case Device.iOS:
+                            checkPath.MoveTo(.2f * imageInfo.Width, .5f * imageInfo.Height);
+                            checkPath.LineTo(.375f * imageInfo.Width, .675f * imageInfo.Height);
+                            checkPath.LineTo(.75f * imageInfo.Width, .3f * imageInfo.Height);
+                            break;
+                        case Device.Android:
+                            checkPath.MoveTo(.2f * imageInfo.Width, .5f * imageInfo.Height);
+                            checkPath.LineTo(.425f * imageInfo.Width, .7f * imageInfo.Height);
+                            checkPath.LineTo(.8f * imageInfo.Width, .275f * imageInfo.Height);
+                            break;
+                        case Device.UWP:
+                            checkPath.MoveTo(.15f * imageInfo.Width, .5f * imageInfo.Height);
+                            checkPath.LineTo(.375f * imageInfo.Width, .75f * imageInfo.Height);
+                            checkPath.LineTo(.85f * imageInfo.Width, .25f * imageInfo.Height);
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
                 using (var checkStroke = new SKPaint
                 {
                     Style = SKPaintStyle.Stroke,
                     Color = CheckColor.ToSKColor(),
-                    StrokeWidth = (float)OutlineWidth,
-                    StrokeCap = SKStrokeCap.Round,
+                    StrokeWidth = OutlineWidth,
                     IsAntialias = true
                 })
                 {
+                    checkStroke.StrokeCap = Design == Design.Unified ? SKStrokeCap.Round : SKStrokeCap.Butt;
                     canvas.DrawPath(checkPath, checkStroke);
                 }
             }
@@ -130,9 +227,11 @@ namespace IntelliAbb.Xamarin.Controls
             })
             {
                 if (Shape == Shape.Circle)
-                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (float)((imageInfo.Width / 2) - (OutlineWidth / 2)), outline);
-                else
-                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), OutlineWidth, OutlineWidth, outline);
+                    canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), outline);
+                else {                    
+                    var cornerRadius = Design == Design.Native && Device.RuntimePlatform == Device.UWP ? 0 : OutlineWidth;
+                    canvas.DrawRoundRect(OutlineWidth, OutlineWidth, imageInfo.Width - (OutlineWidth * 2), imageInfo.Height - (OutlineWidth * 2), cornerRadius, cornerRadius, outline);
+                }
             }
         }
         #endregion
@@ -179,7 +278,7 @@ namespace IntelliAbb.Xamarin.Controls
             set { SetValue(CheckColorProperty, value); }
         }
 
-        public static BindableProperty OutlineWidthProperty = BindableProperty.Create(nameof(OutlineWidth), typeof(float), typeof(Checkbox), 8.0f);
+        public static BindableProperty OutlineWidthProperty = BindableProperty.Create(nameof(OutlineWidth), typeof(float), typeof(Checkbox), DEFAULT_OUTLINE_WIDTH);
         /// <summary>
         /// Gets or sets the width of the outline and check.
         /// </summary>
@@ -190,7 +289,7 @@ namespace IntelliAbb.Xamarin.Controls
             set { SetValue(OutlineWidthProperty, value); }
         }
 
-        public static BindableProperty ShapeProperty = BindableProperty.Create(nameof(Shape), typeof(Shape), typeof(Checkbox), Shape.Circle);
+        public static BindableProperty ShapeProperty = BindableProperty.Create(nameof(Shape), typeof(Shape), typeof(Checkbox), DEFAULT_SHAPE);
         /// <summary>
         /// Gets or sets the shape of the <see cref="T:IntelliAbb.Xamarin.Controls.Checkbox"/>.
         /// </summary>
@@ -198,6 +297,16 @@ namespace IntelliAbb.Xamarin.Controls
         {
             get { return (Shape)GetValue(ShapeProperty); }
             set { SetValue(ShapeProperty, value); }
+        }
+
+        public static BindableProperty DesignProperty = BindableProperty.Create(nameof(Design), typeof(Design), typeof(Checkbox), DEFAULT_DESIGN);
+        /// <summary>
+        /// Gets or sets the shape of the <see cref="T:IntelliAbb.Xamarin.Controls.Checkbox"/>.
+        /// </summary>
+        public Design Design
+        {
+            get { return (Design)GetValue(DesignProperty); }
+            set { SetValue(DesignProperty, value); }
         }
 
         public static new BindableProperty StyleProperty = BindableProperty.Create(nameof(Style), typeof(Style), typeof(Checkbox), propertyChanged: OnStyleChanged);
@@ -240,13 +349,12 @@ namespace IntelliAbb.Xamarin.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
 
-        static void OnIsCheckedChanged(BindableObject bindable, object oldValue, object newValue)
+        static async void OnIsCheckedChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var checkbox = bindable as Checkbox;
-            checkbox?.IsCheckedChanged?.Invoke(checkbox, new TappedEventArgs((bool)newValue));
-            checkbox?._skiaView?.InvalidateSurface();
+            if(!(bindable is Checkbox checkbox)) return;
+            await checkbox.AnimateToggle();
+            checkbox.IsCheckedChanged?.Invoke(checkbox, new TappedEventArgs((bool)newValue));
         }
-
         #endregion
 
         #region IDisposable
@@ -258,10 +366,16 @@ namespace IntelliAbb.Xamarin.Controls
 
         #endregion
     }
+
     public enum Shape
     {
         Circle,
         Rectangle
     }
-}
 
+    public enum Design
+    {
+        Unified,
+        Native
+    }
+}
