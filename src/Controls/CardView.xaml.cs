@@ -9,25 +9,33 @@ namespace IntelliAbb.Xamarin.Controls
 		public CardView ()
 		{
 			InitializeComponent ();
-		}
+        }
 
-        static Style DEFAULT_TITLE_STYLE => new Style(typeof(Label)) {
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = Label.FontAttributesProperty, Value=FontAttributes.Bold
-                    },
-                    new Setter
-                    {
-                        Property = Label.FontSizeProperty, Value= 12
-                    },
-                    new Setter
-                    {
-                        Property = Label.TextColorProperty, Value = Color.Gray
-                    }
-                }
-        };
+        #region Defaults
+
+        static Style DEFAULT_TITLE_STYLE {
+            get {
+                    return new Style(typeof(Label)) {
+                        Setters =
+                        {
+                            new Setter
+                            {
+                                Property = Label.FontAttributesProperty, Value=FontAttributes.Bold
+                            },
+                            new Setter
+                            {
+                                Property = Label.FontSizeProperty, Value= 12
+                            },
+                            new Setter
+                            {
+                                Property = Label.TextColorProperty, Value = Color.Gray
+                            }
+                        }
+                };
+            }
+        }
+
+        #endregion
         
         #region Bindable Properties
 
@@ -80,7 +88,6 @@ namespace IntelliAbb.Xamarin.Controls
         #endregion
 
         #endregion
-
 
         #region Property Changed Methods
 

@@ -17,7 +17,6 @@ namespace IntelliAbb.Xamarin.Controls
     {
         #region Fields
 
-        const double DEFAULT_SIZE = 26;
         bool _isAnimating;
         SKCanvasView _skiaView;
         ICommand _toggleCommand;
@@ -36,7 +35,9 @@ namespace IntelliAbb.Xamarin.Controls
 
         #endregion
 
-        #region Initialize Canvas
+        #region Defaults
+
+        static Design DEFAULT_DESIGN => Design.Unified;
 
         static Shape DEFAULT_SHAPE {
             get 
@@ -69,7 +70,7 @@ namespace IntelliAbb.Xamarin.Controls
                         retVal = 4.0f;
                         break;
                     case Device.UWP:
-                        retVal = 3.0f;
+                        retVal = 2.5f;
                         break;                        
                     case Device.Android:
                     default:
@@ -80,7 +81,27 @@ namespace IntelliAbb.Xamarin.Controls
             }
         }
 
-        static Design DEFAULT_DESIGN => Design.Unified;
+        static double DEFAULT_SIZE {
+            get {
+                double retVal;
+                switch(Device.RuntimePlatform) 
+                {
+                    case Device.UWP:
+                        retVal = 20.0;
+                        break;                        
+                    case Device.iOS:
+                    case Device.Android:
+                    default:
+                        retVal = 24.0;
+                        break;
+                }
+                return retVal;
+            }
+        }
+
+        #endregion
+
+        #region Initialize Canvas
 
         void InitializeCanvas()
         {
