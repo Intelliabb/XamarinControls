@@ -31,6 +31,10 @@ namespace IntelliAbb.Xamarin.Controls
             WidthRequest = HeightRequest = DEFAULT_SIZE;
             HorizontalOptions = VerticalOptions = new LayoutOptions(LayoutAlignment.Center, false);
             Content = _skiaView;
+            GestureRecognizers.Add(new TapGestureRecognizer
+            {
+                Command = _toggleCommand
+            });
         }
 
         #endregion
@@ -110,10 +114,6 @@ namespace IntelliAbb.Xamarin.Controls
             _skiaView = new SKCanvasView();
             _skiaView.PaintSurface += Handle_PaintSurface;
             _skiaView.WidthRequest = _skiaView.HeightRequest = DEFAULT_SIZE;
-            _skiaView.GestureRecognizers.Add(new TapGestureRecognizer
-            {
-                Command = _toggleCommand
-            });
         }
 
         void OnTappedCommand(object obj)
@@ -158,7 +158,8 @@ namespace IntelliAbb.Xamarin.Controls
                 IsAntialias = true
             })
             {
-                if (Shape == Shape.Circle)
+                var shape = Design == Design.Unified ? Shape : DEFAULT_SHAPE;
+                if (shape == Shape.Circle)
                     canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), checkfill);
                 else {
                     var cornerRadius = Design == Design.Native && Device.RuntimePlatform == Device.UWP ? 0 : OutlineWidth;
@@ -226,7 +227,8 @@ namespace IntelliAbb.Xamarin.Controls
                 IsAntialias = true
             })
             {
-                if (Shape == Shape.Circle)
+                var shape = Design == Design.Unified ? Shape : DEFAULT_SHAPE;
+                if (shape == Shape.Circle)
                     canvas.DrawCircle(imageInfo.Width / 2, imageInfo.Height / 2, (imageInfo.Width / 2) - (OutlineWidth / 2), outline);
                 else {                    
                     var cornerRadius = Design == Design.Native && Device.RuntimePlatform == Device.UWP ? 0 : OutlineWidth;
@@ -362,6 +364,7 @@ namespace IntelliAbb.Xamarin.Controls
         public void Dispose()
         {
             _skiaView.PaintSurface -= Handle_PaintSurface;
+            GestureRecognizers.Clear();
         }
 
         #endregion
