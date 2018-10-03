@@ -354,8 +354,8 @@ namespace IntelliAbb.Xamarin.Controls
         static async void OnIsCheckedChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if(!(bindable is Checkbox checkbox)) return;
-            await checkbox.AnimateToggle();
             checkbox.IsCheckedChanged?.Invoke(checkbox, new TappedEventArgs((bool)newValue));
+            await checkbox.AnimateToggle();
         }
         #endregion
 
