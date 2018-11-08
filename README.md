@@ -18,7 +18,8 @@ Add this package to your shared project that holds the control, and each platfor
 Control | iOS | Android | UWP
 ---|---|---|---
 [Checkbox](https://github.com/Intelliabb/XamarinControls/wiki/Checkbox) | <img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/ios_checkbox_native.gif"> |<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/droid_checkbox_native.gif">|<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/uwp_checked.png">
-[CardView](https://github.com/Intelliabb/XamarinControls/wiki/CardView) | <img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/ios_checkbox_native.gif"> |<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/droid_checkbox_native.gif">|<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/uwp_checked.png">
+[CardView](https://github.com/Intelliabb/XamarinControls/wiki/CardView) | <img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/card_ios.png" width="500"> |<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/card_android.png" width="500">| Coming soon
+
 
 # Roadmap
 * Repeater View (coming soon)
