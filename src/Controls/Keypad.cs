@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace IntelliAbb.Xamarin.Controls
+namespace Test
 {
     public class Keypad : Grid, IDisposable
     {
@@ -69,6 +69,7 @@ namespace IntelliAbb.Xamarin.Controls
 
         void BuildView()
         {
+            Children.Clear();
             switch (Mode)
             {
                 case Mode.Currency:
@@ -146,7 +147,6 @@ namespace IntelliAbb.Xamarin.Controls
             foreach (var key in Children)
             {
                 if (key is Button) (key as Button).Clicked -= Button_Clicked;
-                if (key is Image) (key as Image)?.GestureRecognizers.Clear();
             }
         }
     }
