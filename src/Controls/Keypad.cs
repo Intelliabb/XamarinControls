@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace Test
+namespace IntelliAbb.Xamarin.Controls
 {
     public class Keypad : Grid, IDisposable
     {
