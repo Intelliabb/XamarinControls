@@ -16,7 +16,7 @@
     <!-- Root control Version Prefix -->
     <VersionPrefix>1.0.0</VersionPrefix>
     <PackageSummary>Cross platform controls for Xamarin.Forms</PackageSummary>
-    <PackageTags>xamarin;forms;controls;checkbox;card</PackageTags>
+    <PackageTags>xamarin;forms;controls;checkbox;card;keypad</PackageTags>
     <PackageReleaseNotes>Release notes are located at https://github.com/Intelliabb/XamarinControls/wiki/Release-Notes</PackageReleaseNotes>
   </PropertyGroup>
  
