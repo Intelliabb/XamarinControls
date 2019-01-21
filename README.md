@@ -9,6 +9,7 @@ Release notes: https://github.com/Intelliabb/XamarinControls/wiki/Release-Notes
 
 Package | Status
 ---|---
+Release|[![Build status](https://intelliabb.visualstudio.com/XamarinControls/_apis/build/status/XamarinControls)](https://intelliabb.visualstudio.com/XamarinControls/_build/latest?definitionId=8)
 Pre Release|[![Build status](https://intelliabb.visualstudio.com/XamarinControls/_apis/build/status/XamarinControls%20Pre-release)](https://intelliabb.visualstudio.com/XamarinControls/_build/latest?definitionId=7)
 CI Builds|[![Build Status](https://intelliabb.visualstudio.com/XamarinControls/_apis/build/status/XamarinControls%20Dev)](https://intelliabb.visualstudio.com/XamarinControls/_build/latest?definitionId=6)
 
@@ -19,6 +20,7 @@ Control | iOS | Android | UWP
 ---|---|---|---
 [Checkbox](https://github.com/Intelliabb/XamarinControls/wiki/Checkbox) | <img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/ios_checkbox_native.gif"> |<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/droid_checkbox_native.gif">|<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/uwp_checked.png">
 [CardView](https://github.com/Intelliabb/XamarinControls/wiki/CardView) | <img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/card_ios.png" width="500"> |<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/card_android.png" width="500">| Coming soon
+[Keypad](https://github.com/Intelliabb/XamarinControls/wiki/Keypad)|<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/Keypad/KeypadiOS8.png" width="500"> |<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/Keypad/KeypadAndroid1.png" width="500"> | <img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/Keypad/KeypadUWP1.png" width="500"> 
 
 
 # Roadmap
