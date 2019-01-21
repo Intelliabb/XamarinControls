@@ -8,7 +8,9 @@
     <Authors>Hussain Abbasi</Authors>
     <Copyright>© $([System.DateTime]::Now.Year) intelliAbb</Copyright>
     <PackageIconUrl>https://raw.githubusercontent.com/Intelliabb/XamarinControls/master/XamarinControlsLogo.png</PackageIconUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseFile></PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Intelliabb/XamarinControls</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Intelliabb/XamarinControls</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
