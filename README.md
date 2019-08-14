@@ -3,7 +3,9 @@
 <img src="media/XamarinControlsLogo.png" width="128" height="128"/>
 Cross-platform controls for Xamarin and Xamarin.Forms.
 
-<img src="https://github.com/Intelliabb/XamarinControls/blob/master/media/nuget.png" width="32"> NuGet Package: https://www.nuget.org/packages/IntelliAbb.Xamarin.Controls
+NuGet |
+---|
+[![Nuget](https://img.shields.io/nuget/v/IntelliAbb.Xamarin.Controls)](https://www.nuget.org/packages/IntelliAbb.Xamarin.Controls/)
 
 Release notes: https://github.com/Intelliabb/XamarinControls/wiki/Release-Notes
 
